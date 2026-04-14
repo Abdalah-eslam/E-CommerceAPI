@@ -3,6 +3,8 @@ import { productModel } from "../../models/product.model";
 import type{ Request , Response } from "express";
 import aqp from 'api-query-params';
 import { json } from "stream/consumers";
+import { AsyncErrorHandle } from "../../middlewares/AsyncErrorHandle";
+import AppError from "../../utils/AppError";
 export const getProducts = async(req :Request , res:Response ) => {
 let { filter, limit,sort } = aqp(req.query as any);
     const query = JSON.parse(JSON.stringify(filter))
@@ -30,7 +32,7 @@ let { filter, limit,sort } = aqp(req.query as any);
 
 };
 
-const CreateProduct = async(req :Request , res:Response ) => {
+const CreateProduct =AsyncErrorHandle( async(req :Request , res:Response ) => {
     console.log(req.body);
     
     const product = await productModel.create(req.body)
@@ -38,21 +40,22 @@ const CreateProduct = async(req :Request , res:Response ) => {
         massage : "success",
         data : {product}
     })
-};
-const updateProduct = async(req :Request , res:Response ) => {
+});
+const updateProduct =AsyncErrorHandle( async(req :Request , res:Response ) => {
     const product = await productModel.findByIdAndUpdate(req.params.id , req.body,{'returnDocument':'after'})
     res.json({
         massage : "success",
         data : {product}
     })
-};
-const deleteProduct = async(req :Request , res:Response ) => {
+});
+const deleteProduct =AsyncErrorHandle( async(req :Request , res:Response ) => {
     const product = await productModel.findByIdAndDelete(req.params.id)
+    if (!product) throw new AppError('product not found',404)
     res.json({
         massage : "success",
         data : {product}
     })
-};
+});
 export default {
     getProducts
     ,CreateProduct
