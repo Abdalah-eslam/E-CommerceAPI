@@ -5,18 +5,18 @@ const productSchema = new mongoose.Schema({
         type:String,
         trim:true,
         unique:true,
-        require:true,
+        required:true,
         minLength:3
     },
     slug:{
         type:String,
-        require:true,
+        required:true,
         lowercase:true
     },
     price:{
         type:Number,
         min:0,
-        require:true
+        required:true
     },
     priceAfterDiscount:{
         type:Number,
@@ -34,9 +34,9 @@ const productSchema = new mongoose.Schema({
     },
     description:{
         type:String,
-        require:true,
+        required:true,
         minLength:10,
-        maxLenght:300,
+        maxLength:300,
         trim:true
     },
     quantity:{
@@ -54,12 +54,12 @@ const productSchema = new mongoose.Schema({
     images:[String],
     category:{
         type:mongoose.Types.ObjectId,
-        require:true,
+        required:true,
         ref:'category'
     },
     subCategory:{
         type:mongoose.Types.ObjectId,
-        require:true,
+        required:true,
         ref:'subcategory'
     },
     brand:{
@@ -73,6 +73,7 @@ const productSchema = new mongoose.Schema({
     
 })
 
+productSchema.index({title:'text' , description:'text'})
 
 
 
