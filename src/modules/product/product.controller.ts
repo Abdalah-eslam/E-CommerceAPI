@@ -1,41 +1,38 @@
-import { log } from "console";
 import { productModel } from "../../models/product.model";
 import type{ Request , Response } from "express";
-import aqp from 'api-query-params';
-import { json } from "stream/consumers";
 import { AsyncErrorHandle } from "../../middlewares/AsyncErrorHandle";
 import AppError from "../../utils/AppError";
+import Apifeature from "../../utils/APIFeature";
 export const getProducts = async(req :Request , res:Response ) => {
-let { filter, limit,sort } = aqp(req.query as any);
-    const query = JSON.parse(JSON.stringify(filter))
-    // pagination
-    let page = req.query.page ? Number(req.query.page) : 1
-    if (page <= 0) page=1
-    limit = Math.min(Number(limit) || 10, 50);
-    const skip = (page - 1) * limit
-    const [products, total] = await Promise.all([
-        await productModel.find(query).skip(skip).limit(limit).sort(sort as any),
-    productModel.countDocuments()
-    ]);
-    const TotalPages = Math.ceil(total/ limit)
-    
+    const SubcategoryID = req.params.SubcategoryId
+    const filterSubcategory = SubcategoryID? { subCategory: SubcategoryID } : {};
+    const feature = new Apifeature(productModel.find(filterSubcategory), req.query).filter().sorting().limitFields().pagination();
+    await feature.count(productModel);
+    const products = await feature.query;
+    const TotalPages = Math.ceil(feature.total/Number(feature.limit));
         res.json({
         massage : "success",
-        Metadate : {
-            CurrantPage : page,
-            TotalPages ,
-            ...(page > 1 && { prevPage: page - 1 }),
-            ...(page < TotalPages && { nextPage: page + 1 })
-        },
+            Metadate : {
+                TotalProducts : feature.total,
+                CurrantPage : +feature.page,
+                ...(TotalPages>1 &&  {TotalPages } ),
+                ...(+feature.page > 1 && { prevPage: +feature.page - 1 }),
+                ...(+feature.page< TotalPages && { nextPage: +feature.page+ 1 })
+            },
         data : {products}
     })
-
 };
 
 const CreateProduct =AsyncErrorHandle( async(req :Request , res:Response ) => {
-    console.log(req.body);
-    
-    const product = await productModel.create(req.body)
+    const {SubcategoryId}= req.params 
+    const files = req.files as {
+  imgCover?: Express.Multer.File[];
+  images?: Express.Multer.File[];
+};
+    req.body.imgCover = files.imgCover?.[0]?.filename
+    req.body.images = files.images?.map((file :any) => file.filename) as any
+
+    const product = await productModel.create({...req.body, subCategory:SubcategoryId})
     res.json({
         massage : "success",
         data : {product}

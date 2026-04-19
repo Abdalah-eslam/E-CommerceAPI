@@ -1,9 +1,9 @@
 import { Router } from "express";
 import {createCategory, deleteCategory, getCategories, updateCategory} from "./category.controller"
-import { create } from "node:domain";
+import SubcategoryRouter from "../subcategory/subcategory.route";
 
 const CategoryRouter = Router();
-
+CategoryRouter.use("/:CategoryId/subcategory", SubcategoryRouter)
 CategoryRouter.get("/", getCategories );
 CategoryRouter.post("/", createCategory );
 CategoryRouter.put("/:id", updateCategory );

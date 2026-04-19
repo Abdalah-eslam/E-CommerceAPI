@@ -1,4 +1,5 @@
 import mongoose, { mongo } from "mongoose";
+import { BASE_URL } from "../config/ENVconfig";
 
 const brandsSchema = new mongoose.Schema({
     name:{
@@ -18,6 +19,14 @@ const brandsSchema = new mongoose.Schema({
 },
 {
     timestamps:true
+})
+
+brandsSchema.post('init' ,(doc )=>{
+doc.logo =`${BASE_URL}/brands/${doc.logo}`
+})
+
+brandsSchema.pre(/^find/ , async function() {
+
 })
 
 

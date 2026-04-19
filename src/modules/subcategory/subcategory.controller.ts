@@ -1,36 +1,65 @@
 import { after } from "node:test";
 import {  subCategoryModel } from "../../models/subcategory.model";
 import type{ Request , Response } from "express";
+import Apifeature from "../../utils/APIFeature";
 
 export const getSubCategories = async(req :Request , res:Response ) => {
-    const categories = await subCategoryModel.find()
-    res.json({
-        massage : "success",
-        data : {categories}
-    })
+const { CategoryId } = req.params;
+const filter = CategoryId ? { category: CategoryId } : {};
+const feature = new Apifeature(
+subCategoryModel.find(filter),
+req.query)
+.filter()
+.sorting()
+.limitFields()
+.pagination();
+
+await feature.count(subCategoryModel);
+
+const subcategories = await feature.query.exec();
+
+res.json({
+message: "success",
+metadata: {
+    total: feature.total,
+    page: feature.page
+},
+data: subcategories
+});
 };
 export const createSubCategory = async(req :Request , res:Response ) => {
-    console.log(req.body);
+    const {CategoryId} = req.params
+    console.log("categoryID",CategoryId);
     
-    const category = await subCategoryModel.create(req.body)
+    const Subcategory = await subCategoryModel.create({
+  ...req.body,
+  category: CategoryId
+});
     res.json({
         massage : "success",
-        data : {category}
+        data : { Subcategory,
+        }
     })
 };
 
 export const deleteSubCategory = async(req :Request , res:Response ) => {
-    const category = await subCategoryModel.findByIdAndDelete(req.params.id)
+    const {CategoryID} = req.params
+    const Subcategory = await subCategoryModel.findByIdAndDelete(req.params.id)
     res.json({
         massage : "success",
-        data : {category}
+        data : { Subcategory,
+            Category : CategoryID
+        }
     })
 };
 
 export const updateSubCategory = async(req :Request , res:Response ) => {
-    const category = await subCategoryModel.findByIdAndUpdate(req.params.id , req.body,{'returnDocument':'after'})
+    const {CategoryID ,id} = req.params
+    const Subcategory = await subCategoryModel.findByIdAndUpdate(id , req.body,{'returnDocument':'after'})
     res.json({
         massage : "success",
-        data : {category}
+        data : {Subcategory,
+            Category : CategoryID
+        }
     })
 };

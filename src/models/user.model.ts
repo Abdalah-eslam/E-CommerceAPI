@@ -52,9 +52,10 @@ const userSchema = new mongoose.Schema({
     timestamps:true
 })
 
-userSchema.pre('save' , function () {
+userSchema.pre('save' ,async function () {
 
-    this.password = bcrypt.hashSync(this.password as string , 8)
+    const salt = await bcrypt.genSalt(10);
+    this.password  = await bcrypt.hash(this.password as string , salt)
 })
 
 

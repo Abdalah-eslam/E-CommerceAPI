@@ -1,9 +1,10 @@
 import { Router } from "express";
 import {createSubCategory, deleteSubCategory, getSubCategories, updateSubCategory} from "./subcategory.controller"
-import { create } from "node:domain";
 
-const SubcategoryRouter = Router();
+import ProductRouter from "../product/product.route";
 
+const SubcategoryRouter = Router({mergeParams:true});
+SubcategoryRouter.use("/:SubcategoryId/product" , ProductRouter)
 SubcategoryRouter.get("/", getSubCategories );
 SubcategoryRouter.post("/", createSubCategory );
 SubcategoryRouter.put("/:id", updateSubCategory );

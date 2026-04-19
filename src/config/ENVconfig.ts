@@ -3,6 +3,8 @@ config();
 export const{
 MONOGO_URL,
 PORT,
+JWT_SECRET,
+BASE_URL
 }=process.env
 
 

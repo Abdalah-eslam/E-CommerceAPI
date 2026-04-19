@@ -1,36 +1,34 @@
 import {brandsModel}  from "../../models/brand.model.js";
 import type{ Request , Response } from "express";
 
- const getbrand = async(req :Request , res:Response ) => {
-    const categories = await brandsModel.find()
+const getbrand = async(req :Request , res:Response ) => {
+    const brand = await brandsModel.find()
     res.json({
         massage : "success",
-        data : {categories}
+        data : {brands: brand}
     })
 };
- const createbrand = async(req :Request , res:Response ) => {
-    console.log(req.body);
-    
-    const category = await brandsModel.create(req.body)
+const createbrand = async(req :Request , res:Response ) => {
+    const brand = await brandsModel.create({...req.body ,logo: req.file?.filename})
     res.json({
         massage : "success",
-        data : {category}
+        data : {brand}
     })
 };
 
  const deletebrand = async(req :Request , res:Response ) => {
-    const category = await brandsModel.findByIdAndDelete(req.params.id)
+    const brand = await brandsModel.findByIdAndDelete(req.params.id)
     res.json({
         massage : "success",
-        data : {category}
+        data : {brand}
     })
 };
 
  const updatebrand = async(req :Request , res:Response ) => {
-    const category = await brandsModel.findByIdAndUpdate(req.params.id , req.body , {'returnDocument':'after'})
+    const brand = await brandsModel.findByIdAndUpdate(req.params.id , req.body , {'returnDocument':'after'})
     res.json({
         massage : "success",
-        data : {category}
+        data : {Brand: brand}
     })
 };
 export default {getbrand , createbrand , deletebrand , updatebrand}

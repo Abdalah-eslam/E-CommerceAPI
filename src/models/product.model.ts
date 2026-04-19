@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { BASE_URL } from "../config/ENVconfig";
 
 const productSchema = new mongoose.Schema({
     title:{
@@ -74,6 +75,10 @@ const productSchema = new mongoose.Schema({
 })
 
 productSchema.index({title:'text' , description:'text'})
+productSchema.post('init' , (doc )=>{
+    doc.imgCover =`${BASE_URL}/products/${doc.imgCover}`
+    doc.images = doc.images.map((img:string )=>`${BASE_URL}/products/${img}`)
+})
 
 
 
