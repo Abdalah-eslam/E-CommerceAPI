@@ -11,8 +11,7 @@ export const getCategories =AsyncErrorHandle( async(req :Request , res:Response 
     })
 });
 export const createCategory =AsyncErrorHandle( async(req :Request , res:Response ) => {
-    console.log(req.body);
-    
+    req.body.img = req.file?.filename
     const category = await categoryModel.create(req.body)
     res.json({
         massage : "success",
@@ -29,6 +28,7 @@ export const deleteCategory =AsyncErrorHandle( async(req :Request , res:Response
 });
 
 export const updateCategory =AsyncErrorHandle( async(req :Request , res:Response ) => {
+   if (req.file) req.body.img = req.file?.filename
     const category = await categoryModel.findByIdAndUpdate(req.params.id , req.body,{'returnDocument':'after'})
     res.json({
         massage : "success",

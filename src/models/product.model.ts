@@ -71,7 +71,8 @@ const productSchema = new mongoose.Schema({
 },
 {
     timestamps:true,
-    
+    toJSON:{virtuals:true},
+    toObject:{virtuals:true}
 })
 
 productSchema.index({title:'text' , description:'text'})
@@ -80,6 +81,19 @@ productSchema.post('init' , (doc )=>{
     doc.images = doc.images.map((img:string )=>`${BASE_URL}/products/${img}`)
 })
 
+productSchema.pre(/^find/ , async function(this: mongoose.Query<any, any>) {
+    this.populate('category');
+    this.populate('subCategory');
 
+})
+
+productSchema.virtual('reviews' , {
+    ref:'review',
+    localField:'_id',
+    foreignField:'product'
+})
+productSchema.pre(/^find/, function (this: mongoose.Query<any, any>) {
+    this.populate('reviews' , 'comment user rating -product');
+});
 
 export const productModel = mongoose.model('product' , productSchema)

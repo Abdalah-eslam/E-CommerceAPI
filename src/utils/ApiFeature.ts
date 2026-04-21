@@ -53,6 +53,7 @@ pagination(){
     return this;
 }
 
+
 async count (model :any) {
     const filterObj = aqp(this.filters);
     this.total =await model.countDocuments(filterObj.filter|| {}); 
@@ -60,12 +61,6 @@ async count (model :any) {
     return this;
 
 }
-
-
-
-
-
-
 }
 
 

@@ -2,7 +2,7 @@ import { productModel } from "../../models/product.model";
 import type{ Request , Response } from "express";
 import { AsyncErrorHandle } from "../../middlewares/AsyncErrorHandle";
 import AppError from "../../utils/AppError";
-import Apifeature from "../../utils/APIFeature";
+import Apifeature from "../../utils/ApiFeature";
 export const getProducts = async(req :Request , res:Response ) => {
     const SubcategoryID = req.params.SubcategoryId
     const filterSubcategory = SubcategoryID? { subCategory: SubcategoryID } : {};
@@ -26,8 +26,8 @@ export const getProducts = async(req :Request , res:Response ) => {
 const CreateProduct =AsyncErrorHandle( async(req :Request , res:Response ) => {
     const {SubcategoryId}= req.params 
     const files = req.files as {
-  imgCover?: Express.Multer.File[];
-  images?: Express.Multer.File[];
+imgCover?: Express.Multer.File[];
+images?: Express.Multer.File[];
 };
     req.body.imgCover = files.imgCover?.[0]?.filename
     req.body.images = files.images?.map((file :any) => file.filename) as any
@@ -39,6 +39,14 @@ const CreateProduct =AsyncErrorHandle( async(req :Request , res:Response ) => {
     })
 });
 const updateProduct =AsyncErrorHandle( async(req :Request , res:Response ) => {
+    if (req.files) {
+        const files = req.files as {
+imgCover?: Express.Multer.File[];
+images?: Express.Multer.File[];
+};
+        req.body.imgCover = files.imgCover?.[0]?.filename
+    req.body.images = files.images?.map((file :any) => file.filename) as any
+    }   
     const product = await productModel.findByIdAndUpdate(req.params.id , req.body,{'returnDocument':'after'})
     res.json({
         massage : "success",
@@ -54,8 +62,8 @@ const deleteProduct =AsyncErrorHandle( async(req :Request , res:Response ) => {
     })
 });
 export default {
-    getProducts
-    ,CreateProduct
-    ,updateProduct
-    ,deleteProduct
+getProducts
+,CreateProduct
+,updateProduct
+,deleteProduct
 }

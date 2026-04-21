@@ -1,4 +1,5 @@
 import mongoose  from "mongoose";
+import { BASE_URL } from "../config/ENVconfig";
 
 const categorySchema = new mongoose.Schema({
     name: {
@@ -17,6 +18,9 @@ const categorySchema = new mongoose.Schema({
 },
 {
     timestamps:true
+})
+categorySchema.post('init' , (doc )=>{
+    doc.img =`${BASE_URL}/Category/${doc.img}`
 })
 
 export const categoryModel = mongoose.model('category' , categorySchema)    

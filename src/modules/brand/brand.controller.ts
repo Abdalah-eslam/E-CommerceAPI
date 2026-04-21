@@ -10,9 +10,6 @@ const getbrand = async(req :Request , res:Response ) => {
     })
 };
 const createbrand =AsyncErrorHandle( async(req :Request , res:Response , next:NextFunction) => {
-console.log(req.body);
-console.log(req.file);
-console.log(req.files);
     const brand = await brandsModel.create({...req.body ,logo: req.file?.filename})
     
     res.json({
@@ -29,6 +26,7 @@ const deletebrand = async(req :Request , res:Response ) => {
     })
 };
 const updatebrand = AsyncErrorHandle( async(req :Request , res:Response ) => {
+    if (req.file) req.body.logo = req.file?.filename
     const brand = await brandsModel.findByIdAndUpdate(req.params.id , req.body , {'returnDocument':'after'})
     res.json({
         massage : "success",
