@@ -1,8 +1,5 @@
 import multer from 'multer';
 import path from 'path';
-
-
-
 export function uploadSingle(fieldName: string ,Destination :string) {
     const storage = multer.diskStorage({
   destination: function (req, file, cb) {

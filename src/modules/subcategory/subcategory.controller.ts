@@ -1,7 +1,7 @@
 import { after } from "node:test";
 import {  subCategoryModel } from "../../models/subcategory.model";
 import type{ Request , Response } from "express";
-import Apifeature from "../../utils/APIFeature";
+import Apifeature from "../../utils/ApiFeature";
 
 export const getSubCategories = async(req :Request , res:Response ) => {
 const { CategoryId } = req.params;

@@ -1,8 +1,10 @@
 import { Router } from "express";
 import authController from "./auth.controller";
-
+import multer from "multer";
+const upload = multer();
 const AuthRouter = Router();
+AuthRouter.use(upload.none());
 AuthRouter.post("/register", authController.register);
 AuthRouter.post("/login", authController.login);
-AuthRouter.get("/logout", authController.logout);
+AuthRouter.post("/logout", authController.logout);
 export default AuthRouter;

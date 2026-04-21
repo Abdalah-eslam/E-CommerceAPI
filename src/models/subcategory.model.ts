@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { Query } from "mongoose";
 
 const subCategorySchema = new mongoose.Schema({
     name:{
@@ -22,5 +23,9 @@ const subCategorySchema = new mongoose.Schema({
 {
     timestamps:true
 })
+
+subCategorySchema.pre(/^find/, function (this: Query<any, any>) {
+    this.populate('category');
+});
 
 export const subCategoryModel = mongoose.model('subcategory' , subCategorySchema)
