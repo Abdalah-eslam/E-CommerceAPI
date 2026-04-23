@@ -1,8 +1,6 @@
-import { after } from "node:test";
 import {  subCategoryModel } from "../../models/subcategory.model";
 import type{ Request , Response } from "express";
 import Apifeature from "../../utils/ApiFeature";
-
 export const getSubCategories = async(req :Request , res:Response ) => {
 const { CategoryId } = req.params;
 const filter = CategoryId ? { category: CategoryId } : {};
@@ -29,11 +27,9 @@ data: subcategories
 };
 export const createSubCategory = async(req :Request , res:Response ) => {
     const {CategoryId} = req.params
-    console.log("categoryID",CategoryId);
-    
     const Subcategory = await subCategoryModel.create({
-  ...req.body,
-  category: CategoryId
+    ...req.body,
+    category: CategoryId
 });
     res.json({
         massage : "success",

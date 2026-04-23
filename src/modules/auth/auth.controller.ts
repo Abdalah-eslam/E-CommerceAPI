@@ -14,8 +14,6 @@ res.json({massage : "success" , data : user})
 
 
 const login = (async(req :Request , res:Response, next:NextFunction) => {
-    console.log(req.body);
-    
     const user = await userModel.findOne({email : req.body.email}).select('-wishlist -createdAt -updatedAt -__v -addresses')
     if (!user) return next(new AppError('user not found',404));
     const isMatch = await bcrypt.compare(req.body.password , user?.password as string)

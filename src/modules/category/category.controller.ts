@@ -1,8 +1,6 @@
-import { after } from "node:test";
 import { categoryModel } from "../../models/category.model";
 import type{ Request , Response } from "express";
 import { AsyncErrorHandle } from "../../middlewares/AsyncErrorHandle";
-
 export const getCategories =AsyncErrorHandle( async(req :Request , res:Response ) => {
     const categories = await categoryModel.find()
     res.json({

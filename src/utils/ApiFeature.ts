@@ -45,19 +45,13 @@ pagination(){
     this.limit = Number(limit) || 10;
     const skip = (this.page - 1) * this.limit;
     this.query = this.query.skip(skip).limit(this.limit);
-    console.log('this.page',this.page);
-    console.log('this.limit',this.limit);
-    console.log('this.filters',this.filters);
-    console.log('this.sort',this.sort);
-    console.log('this.fields',this.fields);
     return this;
 }
 
 
 async count (model :any) {
     const filterObj = aqp(this.filters);
-    this.total =await model.countDocuments(filterObj.filter|| {}); 
-    console.log('this.total',this.total);
+    this.total =await model.countDocuments(filterObj.filter|| {});
     return this;
 
 }

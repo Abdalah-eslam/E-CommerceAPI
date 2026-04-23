@@ -1,4 +1,4 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 import { BASE_URL } from "../config/ENVconfig";
 
 const brandsSchema = new mongoose.Schema({
