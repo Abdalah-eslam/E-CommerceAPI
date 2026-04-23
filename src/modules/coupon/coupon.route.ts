@@ -1,0 +1,9 @@
+import { Router } from "express";
+import CouponController from "./coupon.controller";
+import { Protect } from "../../middlewares/Authprotect";
+import { AllowTo } from "../../middlewares/allowTo";
+const CouponRouter = Router();
+CouponRouter.post("/",Protect,AllowTo('admin'),CouponController.CreateCoupon);
+CouponRouter.get("/",Protect,AllowTo('user'),CouponController.GetCoupon);
+CouponRouter.delete("/:id",Protect,AllowTo('admin'),CouponController.DeleteCoupon);
+export default CouponRouter 
