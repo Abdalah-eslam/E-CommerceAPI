@@ -1,8 +1,8 @@
 import { Router } from "express";
-import brandController from "./brand.controller"
-import { uploadSingle } from "../../middlewares/uploadPics";
-import { Protect } from "../../middlewares/Authprotect";
-import { AllowTo } from "../../middlewares/allowTo";
+import brandController from "./brand.controller.js"
+import { uploadSingle } from "../../middlewares/uploadPics.js";
+import { Protect } from "../../middlewares/Authprotect.js";
+import { AllowTo } from "../../middlewares/allowTo.js";
 
 const BrandRouter = Router();
 BrandRouter.use (Protect)
