@@ -1,6 +1,6 @@
-import { categoryModel } from "../../models/category.model";
+import { categoryModel } from "../../models/category.model.js";
 import type{ Request , Response } from "express";
-import { AsyncErrorHandle } from "../../middlewares/AsyncErrorHandle";
+import { AsyncErrorHandle } from "../../middlewares/AsyncErrorHandle.js";
 export const getCategories =AsyncErrorHandle( async(req :Request , res:Response ) => {
     const categories = await categoryModel.find()
     res.json({

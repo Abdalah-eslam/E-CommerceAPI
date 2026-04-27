@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { calcTotalPrice } from "../utils/calcTotalPrice";
 const cartSchema = new mongoose.Schema({
     user : {
         type : mongoose.Types.ObjectId,

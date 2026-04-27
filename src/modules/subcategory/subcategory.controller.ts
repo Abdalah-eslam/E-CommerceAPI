@@ -1,6 +1,6 @@
-import {  subCategoryModel } from "../../models/subcategory.model";
+import {  subCategoryModel } from "../../models/subcategory.model.js";
 import type{ Request , Response } from "express";
-import Apifeature from "../../utils/ApiFeature";
+import Apifeature from "../../utils/ApiFeature.js";
 export const getSubCategories = async(req :Request , res:Response ) => {
 const { CategoryId } = req.params;
 const filter = CategoryId ? { category: CategoryId } : {};

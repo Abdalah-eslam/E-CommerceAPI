@@ -1,5 +1,5 @@
 import mongoose  from "mongoose";
-import { BASE_URL } from "../config/ENVconfig";
+import { BASE_URL } from "../config/ENVconfig.js";
 
 const categorySchema = new mongoose.Schema({
     name: {

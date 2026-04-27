@@ -1,7 +1,6 @@
-import type { ObjectId } from "mongoose";
-import { reviewModel } from "../../models/review.model";
+import { reviewModel } from "../../models/review.model.js";
 import type { Request , Response , NextFunction} from "express";
-import AppErorr from "../../utils/AppError";
+import AppErorr from "../../utils/AppError.js";
 const createReview = async(req :Request , res:Response , next:NextFunction) => {
     req.body.user = (req as any).user.Id
     const  isExist = await reviewModel.findOne({user: req.body.user, product : req.body.product})

@@ -1,10 +1,10 @@
 import type { Request , Response , NextFunction} from "express";
-import  {cartModel}  from "../../models/cart.model";
-import { AsyncErrorHandle } from "../../middlewares/AsyncErrorHandle";
-import AppError from "../../utils/AppError";
-import { productModel } from "../../models/product.model";
-import { calcTotalPrice } from "../../utils/calcTotalPrice";
-import { couponModel } from "../../models/coupon.model";
+import  {cartModel}  from "../../models/cart.model.js";
+import { AsyncErrorHandle } from "../../middlewares/AsyncErrorHandle.js";
+import AppError from "../../utils/AppError.js";
+import { productModel } from "../../models/product.model.js";
+import { calcTotalPrice } from "../../utils/calcTotalPrice.js";
+import { couponModel } from "../../models/coupon.model.js";
 
 export const GetUserCart = AsyncErrorHandle(async(req :Request , res:Response , next:NextFunction) => {
     const result = await cartModel.find({user : (req as any).user.Id}).populate('items.product')

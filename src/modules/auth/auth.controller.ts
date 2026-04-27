@@ -1,9 +1,9 @@
 import type { Request , Response , NextFunction} from "express";
-import { AsyncErrorHandle } from "../../middlewares/AsyncErrorHandle";
-import AppError from "../../utils/AppError";    
-import { userModel } from "../../models/user.model";
+import { AsyncErrorHandle } from "../../middlewares/AsyncErrorHandle.js";
+import AppError from "../../utils/AppError.js";    
+import { userModel } from "../../models/user.model.js";
 import bcrypt from "bcryptjs";
-import { genrateJWT } from "../../utils/JWT";
+import { genrateJWT } from "../../utils/JWT.js";
 const register = AsyncErrorHandle(async(req :Request , res:Response, next:NextFunction) => {
 const isMatch = await userModel.findOne({email : req.body.email})
 if (isMatch) throw new AppError('user already exist',409)

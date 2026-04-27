@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { Protect } from "../../middlewares/Authprotect";
-import { AllowTo } from "../../middlewares/allowTo";
-import orderController from "./order.controller";
+import { Protect } from "../../middlewares/Authprotect.js";
+import { AllowTo } from "../../middlewares/allowTo.js";
+import orderController from "./order.controller.js";
 
 const OrderRouter = Router();
 

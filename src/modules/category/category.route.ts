@@ -1,9 +1,9 @@
 import { Router } from "express";
-import {createCategory, deleteCategory, getCategories, updateCategory} from "./category.controller"
-import SubcategoryRouter from "../subcategory/subcategory.route";
-import { Protect } from "../../middlewares/Authprotect";
-import { uploadSingle } from "../../middlewares/uploadPics";
-import { AllowTo } from "../../middlewares/allowTo";
+import {createCategory, deleteCategory, getCategories, updateCategory} from "./category.controller.js"
+import SubcategoryRouter from "../subcategory/subcategory.route.js";
+import { Protect } from "../../middlewares/Authprotect.js";
+import { uploadSingle } from "../../middlewares/uploadPics.js";
+import { AllowTo } from "../../middlewares/allowTo.js";
 
 const CategoryRouter = Router();
 CategoryRouter.use("/:CategoryId/subcategory", SubcategoryRouter)

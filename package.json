@@ -4,7 +4,7 @@
   "description": "E-commerce API",
   "license": "ISC",
   "author": "",
-  "type": "commonjs",
+  "type": "module",
   "main": "dist/server.js",
   "scripts": {
     "build": "tsc",

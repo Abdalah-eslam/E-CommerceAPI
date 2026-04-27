@@ -1,7 +1,7 @@
 import { Router } from "express";
-import cartController from "./cart.controller";
-import { Protect } from "../../middlewares/Authprotect";
-import { AllowTo } from "../../middlewares/allowTo";
+import cartController from "./cart.controller.js";
+import { Protect } from "../../middlewares/Authprotect.js";
+import { AllowTo } from "../../middlewares/allowTo.js";
 const CartRouter = Router();
 CartRouter.get("/",Protect,AllowTo('user'),cartController.GetUserCart);
 CartRouter.post("/",Protect,AllowTo('user'),cartController.CreateCart);

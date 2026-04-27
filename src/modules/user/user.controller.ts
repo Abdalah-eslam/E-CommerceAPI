@@ -1,7 +1,7 @@
 import type { NextFunction , Request , Response } from "express";
-import { AsyncErrorHandle } from "../../middlewares/AsyncErrorHandle";
-import { userModel } from "../../models/user.model";
-import AppErorr from "../../utils/AppError";
+import { AsyncErrorHandle } from "../../middlewares/AsyncErrorHandle.js";
+import { userModel } from "../../models/user.model.js";
+import AppErorr from "../../utils/AppError.js";
 const GetUsers = AsyncErrorHandle(async (req: Request, res: Response , next:NextFunction) => {
     const users = await userModel.find()
     res.json({

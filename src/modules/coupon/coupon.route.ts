@@ -1,7 +1,7 @@
 import { Router } from "express";
-import CouponController from "./coupon.controller";
-import { Protect } from "../../middlewares/Authprotect";
-import { AllowTo } from "../../middlewares/allowTo";
+import CouponController from "./coupon.controller.js";
+import { Protect } from "../../middlewares/Authprotect.js";
+import { AllowTo } from "../../middlewares/allowTo.js";
 const CouponRouter = Router();
 CouponRouter.post("/",Protect,AllowTo('admin'),CouponController.CreateCoupon);
 CouponRouter.get("/",Protect,AllowTo('user'),CouponController.GetCoupon);

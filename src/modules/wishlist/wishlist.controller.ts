@@ -1,6 +1,6 @@
 import type { Request , Response , NextFunction } from "express";
-import { AsyncErrorHandle } from "../../middlewares/AsyncErrorHandle";
-import { userModel } from "../../models/user.model";
+import { AsyncErrorHandle } from "../../middlewares/AsyncErrorHandle.js";
+import { userModel } from "../../models/user.model.js";
 const CreateWishlist = AsyncErrorHandle(async(req :Request , res:Response , next:NextFunction) => {
 const result = await userModel.findByIdAndUpdate((req as any).user.Id , {$addToSet : {wishlist : req.params.id}} , {'returnDocument':'after'})
 res.json({massage : "success" , Wishlist : result?.wishlist})

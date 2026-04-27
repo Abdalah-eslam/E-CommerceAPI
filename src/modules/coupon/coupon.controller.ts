@@ -1,7 +1,7 @@
-import { couponModel } from "../../models/coupon.model";
-import { AsyncErrorHandle } from "../../middlewares/AsyncErrorHandle";
+import { couponModel } from "../../models/coupon.model.js";
+import { AsyncErrorHandle } from "../../middlewares/AsyncErrorHandle.js";
 import type { Request , Response , NextFunction} from "express";
-import AppErorr from "../../utils/AppError";
+import AppErorr from "../../utils/AppError.js";
 
 const CreateCoupon = AsyncErrorHandle(async(req :Request , res:Response , next:NextFunction) => {
     const result = await couponModel.create(req.body)

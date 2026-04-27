@@ -1,8 +1,8 @@
 import { Router } from "express";
-import productController from "./product.controller"
-import { uploadMultiple } from "../../middlewares/uploadPics";
-import { Protect } from "../../middlewares/Authprotect";
-import { AllowTo } from "../../middlewares/allowTo";
+import productController from "./product.controller.js"
+import { uploadMultiple } from "../../middlewares/uploadPics.js";
+import { Protect } from "../../middlewares/Authprotect.js";
+import { AllowTo } from "../../middlewares/allowTo.js";
 const ProductRouter = Router({mergeParams:true});
 const uploads=[{ name: 'imgCover', maxCount: 1 }, { name: 'images', maxCount: 4 }]
 

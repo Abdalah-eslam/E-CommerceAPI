@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import { productModel } from "./product.model";
-import { MONOGO_URL } from "../config/ENVconfig";
+import { productModel } from "./product.model.js";
+import { MONOGO_URL } from "../config/ENVconfig.js";
 
 const seedProducts = async () => {
   try {

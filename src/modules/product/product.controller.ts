@@ -1,8 +1,8 @@
-import { productModel } from "../../models/product.model";
+import { productModel } from "../../models/product.model.js";
 import type{ Request , Response } from "express";
-import { AsyncErrorHandle } from "../../middlewares/AsyncErrorHandle";
-import AppError from "../../utils/AppError";
-import Apifeature from "../../utils/ApiFeature";
+import { AsyncErrorHandle } from "../../middlewares/AsyncErrorHandle.js";
+import AppError from "../../utils/AppError.js";
+import Apifeature from "../../utils/ApiFeature.js";
 export const getProducts = async(req :Request , res:Response ) => {
     const SubcategoryID = req.params.SubcategoryId
     const filterSubcategory = SubcategoryID? { subCategory: SubcategoryID } : {};

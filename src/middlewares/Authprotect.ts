@@ -1,6 +1,6 @@
 import type { NextFunction , Request , Response} from "express";
-import AppErorr from "../utils/AppError";
-import { verifyJWT } from "../utils/JWT";
+import AppErorr from "../utils/AppError.js";
+import { verifyJWT } from "../utils/JWT.js";
 
 export const Protect = (req:Request , res:Response , next:NextFunction) =>{
 
