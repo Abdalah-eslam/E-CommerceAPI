@@ -12,4 +12,5 @@ OrderRouter.route("/")
 .get(Protect , AllowTo("user") , orderController.GetUserOrder)
 
 OrderRouter.get("/All " , Protect , AllowTo("admin") , orderController.GetAllOrder)
+OrderRouter.post("/CheckOut/:id" , Protect , AllowTo("user") , orderController.CreateSessionOrder)
 export default OrderRouter

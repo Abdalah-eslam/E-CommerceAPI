@@ -4,6 +4,10 @@ import { AsyncErrorHandle } from "../../middlewares/AsyncErrorHandle";
 import  AppError  from "../../utils/AppError";
 import { cartModel } from "../../models/cart.model";
 import { productModel } from "../../models/product.model";
+import Stripe from 'stripe';
+import { BASE_URL, STRIP_KEY } from "../../config/ENVconfig";
+import { userModel } from "../../models/user.model";
+const stripeClient =new Stripe(STRIP_KEY as string);
 
 const CreateCashOder  = AsyncErrorHandle(async(req :Request , res:Response , next:NextFunction) => {
     const CardID = req.params.id;
@@ -75,4 +79,32 @@ const GetUserOrder = AsyncErrorHandle(async(req :Request , res:Response , next:N
     res.json({massage : "success" , data : Result})
 });
 
-export default { CreateCashOder , GetAllOrder , GetUserOrder}
+const CreateSessionOrder = AsyncErrorHandle(async(req :Request , res:Response , next:NextFunction) => {
+    const User = await userModel.findById((req as any).user.Id)
+    const CardID = req.params.id
+    const  Cart = await cartModel.findOne({user : (req as any).user.Id , _id : CardID}).populate('items.product')
+    if (!Cart) return next(new AppError('cart not found',404));
+    const Session = await stripeClient.checkout.sessions.create({
+        line_items : [
+            {
+                price_data : {
+                    currency : 'egp',
+                    unit_amount : Cart.totlePrice as number * 100,
+                    product_data : {
+                        name : User?.name as any
+                    },
+                },
+                quantity : 1
+            }
+
+        ],
+        client_reference_id : req.params.id as any , 
+        metadata : req.body.shippingAddress,
+        mode : 'payment',
+        success_url : BASE_URL as string,
+        cancel_url : 'https://www.google.com.eg/index.html'
+    })
+    res.json({massage : "success" , data : Session})
+}) 
+
+export default { CreateCashOder , GetAllOrder , GetUserOrder , CreateSessionOrder}
