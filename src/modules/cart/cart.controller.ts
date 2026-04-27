@@ -7,7 +7,7 @@ import { calcTotalPrice } from "../../utils/calcTotalPrice";
 import { couponModel } from "../../models/coupon.model";
 
 export const GetUserCart = AsyncErrorHandle(async(req :Request , res:Response , next:NextFunction) => {
-    const result = await cartModel.find({user : (req as any).user.Id})
+    const result = await cartModel.find({user : (req as any).user.Id}).populate('items.product')
     res.json({massage : "success" , data : result})
 });
 
