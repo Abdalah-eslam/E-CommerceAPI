@@ -1,8 +1,8 @@
 import express  from 'express';
-import {PORT} from './src/config/ENVconfig.js';
-import { DBConnection } from './src/config/DBconfig.js';
+import {PORT} from './config/ENVconfig.js';
+import { DBConnection } from './config/DBconfig.js';
 import cookieParser from'cookie-parser'
-import {init} from './src/index.routes.js'
+import {init} from './index.routes.js'
 const app = express();
 app.use(express.static('src/uploads'))
 app.use(express.json())

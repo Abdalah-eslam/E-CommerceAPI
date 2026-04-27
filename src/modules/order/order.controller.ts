@@ -96,7 +96,6 @@ const CreateSessionOrder = AsyncErrorHandle(async(req :Request , res:Response , 
                 },
                 quantity : 1
             }
-
         ],
         client_reference_id : req.params.id as any , 
         metadata : req.body.shippingAddress,
